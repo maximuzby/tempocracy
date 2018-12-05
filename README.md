@@ -1,1 +1,3 @@
-# tempocracy
+# Tempocracy
+
+Time planner
