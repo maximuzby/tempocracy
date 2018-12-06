@@ -3,7 +3,31 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.136
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tempocracy.API", "Tempocracy.API\Tempocracy.API.csproj", "{3B8E5601-46BE-4AD6-92D4-B9AE1940A75B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tempocracy.Domain", "Tempocracy.Domain\Tempocracy.Domain.csproj", "{7E3543E6-16DF-485E-AAD5-A46510D66C8D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tempocracy.Infrastructure", "Tempocracy.Infrastructure\Tempocracy.Infrastructure.csproj", "{F0FC85FE-02BF-4BC1-BB7F-42537E33CBFA}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3B8E5601-46BE-4AD6-92D4-B9AE1940A75B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B8E5601-46BE-4AD6-92D4-B9AE1940A75B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B8E5601-46BE-4AD6-92D4-B9AE1940A75B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B8E5601-46BE-4AD6-92D4-B9AE1940A75B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E3543E6-16DF-485E-AAD5-A46510D66C8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E3543E6-16DF-485E-AAD5-A46510D66C8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E3543E6-16DF-485E-AAD5-A46510D66C8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E3543E6-16DF-485E-AAD5-A46510D66C8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0FC85FE-02BF-4BC1-BB7F-42537E33CBFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0FC85FE-02BF-4BC1-BB7F-42537E33CBFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0FC85FE-02BF-4BC1-BB7F-42537E33CBFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0FC85FE-02BF-4BC1-BB7F-42537E33CBFA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
