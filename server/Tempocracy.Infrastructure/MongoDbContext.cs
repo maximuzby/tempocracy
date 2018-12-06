@@ -6,5 +6,9 @@ namespace Tempocracy.Infrastructure
 {
     public class MongoDbContext
     {
+        public MongoDbContext()
+        {
+            
+        }
     }
 }

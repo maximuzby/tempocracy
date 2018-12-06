@@ -1,22 +1,42 @@
 ﻿using System.Linq;
-using Tempocracy.Domain.Models;
 
 namespace Tempocracy.Domain.Queries.Things
 {
-    public class GetThingArgs
+    public class GetThingQuery
     {
         public string Id { get; set; }
     }
 
-    public interface IGetThing : IQuery<GetThingArgs, Thing>
+    public class GetThingResult
     {
+        public string Id { get; set; }
+
+        public string Text { get; set; }
     }
 
-    public class GetThing : IGetThing
+    public interface IGetThingHandler : IQueryHandler<GetThingQuery, GetThingResult>
     {
-        public Thing Run(GetThingArgs args, IAppQueryContext context)
+
+    }
+
+    public class GetThingHandler : IGetThingHandler
+    {
+        public GetThingResult Ask(GetThingQuery args, IAppQueryContext context)
         {
-            return context.Things.FirstOrDefault(x => x.Id == args.Id);
+            var thing = context.Things.FirstOrDefault(x => x.Id == args.Id);
+            if (thing == null)
+            {
+                return new GetThingResult
+                {
+                    Text = "[NOT FOUND]"
+                };
+            }
+
+            return new GetThingResult
+            {
+                Id = thing.Id,
+                Text = thing.Text
+            };
         }
     }
 }

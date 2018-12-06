@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace Tempocracy.Domain.Models
 {
@@ -8,6 +9,8 @@ namespace Tempocracy.Domain.Models
     /// </summary>
     public class Thing
     {
+        [BsonId]
+        [BsonIgnoreIfDefault]
         public string Id { get; set; }
 
         public string Title { get; set; }
