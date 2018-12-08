@@ -23,6 +23,7 @@ namespace Tempocracy.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddCors();
             services.AddRouting(options => options.LowercaseUrls = true);
             services.Configure<ConnectionOptions>(Configuration);
 
@@ -65,6 +66,10 @@ namespace Tempocracy.API
             {
                 app.UseHsts();
             }
+
+            // Shows UseCors with CorsPolicyBuilder.
+            app.UseCors(builder =>
+                builder.WithOrigins("http://localhost:3000"));
 
             app.UseHttpsRedirection();
             app.UseMvc();

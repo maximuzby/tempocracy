@@ -6,7 +6,10 @@ namespace Tempocracy.Domain.Queries.Records
 {
     public class GetUserRecordsQuery : IQuery<GetUserRecordsResult>
     {
-        private const int DefaultTake = 100;
+        private const int DefaultSkip = 0;
+        private const int DefaultTake = 1000;
+
+        public int Skip { get; set; } = DefaultSkip;
 
         public int Take { get; set; } = DefaultTake;
 
@@ -41,8 +44,10 @@ namespace Tempocracy.Domain.Queries.Records
         public GetUserRecordsResult Ask(GetUserRecordsQuery query)
         {
             var records = context.Records
-                .Take(query.Take)
                 .Where(x => x.OwnerId == query.UserToken && !x.IsDeleted)
+                .OrderByDescending(x => x.CreatedAtUtc)
+                .Skip(query.Skip)
+                .Take(query.Take)
                 .Select(x => new UserRecordView
                 {
                     Id = x.Id,

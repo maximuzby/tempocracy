@@ -5,7 +5,7 @@ using Tempocracy.Domain.Queries.Records;
 
 namespace Tempocracy.API.Controllers
 {
-    [Route("record")]
+    [Route("api/record")]
     [ApiController]
     public class RecordController : ControllerBase
     {

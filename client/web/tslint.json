@@ -8,13 +8,7 @@
 	"rulesDirectory": ["tslint-plugin-prettier"],
 	"rules": {
 		"adjacent-overload-signatures": true,
-		"align": [
-			true,
-			"parameters",
-			"statements",
-			"members",
-			"elements"
-		],
+		"align": [true, "parameters", "statements", "members", "elements"],
 		"arrow-return-shorthand": true,
 		"ban": false,
 		"ban-comma-operator": true,
@@ -68,7 +62,15 @@
 		"no-arg": true,
 		"no-bitwise": true,
 		"no-conditional-assignment": true,
-		"no-console": [true, "debug", "info", "time", "timeEnd", "trace", "log"],
+		"no-console": [
+			true,
+			"debug",
+			"info",
+			"time",
+			"timeEnd",
+			"trace",
+			"log"
+		],
 		"no-consecutive-blank-lines": [true],
 		"no-construct": true,
 		"no-debugger": true,
@@ -99,6 +101,7 @@
 		"no-unnecessary-callback-wrapper": true,
 		"no-unnecessary-initializer": true,
 		"no-unnecessary-type-assertion": true,
+		"no-unnecessary-semicolons": false,
 		"no-unsafe-finally": true,
 		"no-unused-expression": true,
 		"no-use-before-declare": true,
@@ -121,7 +124,7 @@
 		"prettier": true,
 		"quotemark": [true, "single"],
 		"radix": true,
-		"semicolon": [true, "always"],
+		"semicolon": [true, "always", "ignore-bound-class-methods"],
 		"space-before-function-paren": [
 			true,
 			{
