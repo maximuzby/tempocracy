@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using MongoDB.Bson;
 
 namespace Tempocracy.Domain.Queries.Records
 {
@@ -18,6 +18,8 @@ namespace Tempocracy.Domain.Queries.Records
         public string Id { get; set; }
 
         public string Text { get; set; }
+
+        public DateTime CreatedAt { get; set; }
     }
 
     public class GetUserRecordsResult
@@ -44,7 +46,8 @@ namespace Tempocracy.Domain.Queries.Records
                 .Select(x => new UserRecordView
                 {
                     Id = x.Id,
-                    Text = x.Text
+                    Text = x.Text,
+                    CreatedAt = x.CreatedAtUtc
                 }).ToList();
 
             return new GetUserRecordsResult
