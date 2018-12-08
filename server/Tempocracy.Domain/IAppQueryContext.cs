@@ -5,6 +5,6 @@ namespace Tempocracy.Domain
 {
     public interface IAppQueryContext
     {
-        IQueryable<Thing> Things { get; }
+        IQueryable<Record> Records { get; }
     }
 }

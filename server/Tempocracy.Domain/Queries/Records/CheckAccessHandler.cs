@@ -1,11 +1,12 @@
-﻿using System.Linq;
+﻿using MongoDB.Bson;
+using System.Linq;
 using Tempocracy.Domain.Models;
 
-namespace Tempocracy.Domain.Queries.Things
+namespace Tempocracy.Domain.Queries.Records
 {
     public class CheckAccessQuery : IQuery<CheckAccessResult>
     {
-        public string ThingId { get; set; }
+        public string RecordId { get; set; }
         public string AccessToken { get; set; }
         public string UserId { get; set; }
     }
@@ -27,18 +28,18 @@ namespace Tempocracy.Domain.Queries.Things
 
         public CheckAccessResult Ask(CheckAccessQuery query)
         {
-            var thing = context.Things.FirstOrDefault(x => x.Id == query.ThingId);
+            var record = context.Records.FirstOrDefault(x => x.Id == query.RecordId);
 
             return new CheckAccessResult
             {
-                IsOwner = IsOwner(thing, query.UserId),
-                HasAccess = HasAccess(query, thing?.Access)
+                IsOwner = IsOwner(record, query.UserId),
+                HasAccess = HasAccess(query, record?.Access)
             };
         }
 
-        private static bool IsOwner(Thing thing, string userId)
+        private static bool IsOwner(Record record, string userId)
         {
-            return userId != null && thing?.OwnerId == userId;
+            return userId != null && record?.OwnerId == userId;
         }
 
         private static bool HasAccess(CheckAccessQuery query, Access access)
@@ -55,7 +56,7 @@ namespace Tempocracy.Domain.Queries.Things
 
         private static bool HasInviteFromOwner(CheckAccessQuery query, Access access)
         {
-            return !string.IsNullOrEmpty(query.UserId) 
+            return !string.IsNullOrEmpty(query.UserId.ToString()) 
                 && access.InvitedUserIds != null
                 && access.InvitedUserIds.Contains(query.UserId);
         }

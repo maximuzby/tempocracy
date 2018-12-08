@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Tempocracy.Domain;
+using Tempocracy.Infrastructure.Database;
 
 namespace Tempocracy.Infrastructure
 {
@@ -9,6 +10,7 @@ namespace Tempocracy.Infrastructure
         {
             builder.RegisterType<AppQueryContext>().As<IAppQueryContext>().InstancePerLifetimeScope();
             builder.RegisterType<AppCommandContext>().As<IAppCommandContext>().InstancePerLifetimeScope();
+            builder.RegisterType<MongoDbContext>().As<IMongoDbContext>().SingleInstance();
         }
     }
 }

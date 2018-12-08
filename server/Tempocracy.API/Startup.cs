@@ -6,6 +6,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
 using Tempocracy.API.DependencyInjection;
+using Tempocracy.Domain;
+using Tempocracy.Infrastructure;
 
 namespace Tempocracy.API
 {
@@ -23,6 +25,8 @@ namespace Tempocracy.API
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+            services.Configure<ConnectionOptions>(Configuration);
+
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
             {
@@ -30,15 +34,14 @@ namespace Tempocracy.API
             });
         }
 
-        // ConfigureContainer is where you can register things directly
-        // with Autofac. This runs after ConfigureServices so the things
-        // here will override registrations made in ConfigureServices.
-        // Don't build the container; that gets done for you. If you
-        // need a reference to the container, you need to use the
-        // "Without ConfigureContainer" mechanism shown later.
         public void ConfigureContainer(ContainerBuilder builder)
         {
-            builder.RegisterModule(new AutofacModule());
+            builder.Register(p => new ConnectionOptions
+            {
+                ConnectionString = Configuration.GetValue<string>("ConnectionString")
+            }).SingleInstance();
+            builder.RegisterModule<DomainModule>();
+            builder.RegisterModule<InfrastructureModule>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

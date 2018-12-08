@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace Tempocracy.Domain.Models
@@ -7,10 +8,11 @@ namespace Tempocracy.Domain.Models
     /// <summary>
     /// It could be Event, Aim, Meeting, etc.
     /// </summary>
-    public class Thing
+    public class Record
     {
         [BsonId]
         [BsonIgnoreIfDefault]
+        [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
 
         public string Title { get; set; }
@@ -19,7 +21,7 @@ namespace Tempocracy.Domain.Models
 
         public string Category { get; set; }
 
-        public IList<Thing> SubThings { get; set; }
+        public IList<Record> SubRecords { get; set; }
 
         public SmartDate Start { get; set; }
 

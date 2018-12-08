@@ -1,21 +1,21 @@
-﻿using System;
-using Tempocracy.Domain;
+﻿using Tempocracy.Domain;
 using Tempocracy.Domain.Models;
+using Tempocracy.Infrastructure.Database;
 
 namespace Tempocracy.Infrastructure
 {
     public class AppCommandContext : IAppCommandContext
     {
-        public AppCommandContext(IAppQueryContext queryContext)
+        private readonly IMongoDbContext dbContext;
+
+        public AppCommandContext(IMongoDbContext dbContext)
         {
-            Queries = queryContext;
+            this.dbContext = dbContext;
         }
 
-        public IAppQueryContext Queries { get; }
-
-        public void Save(Thing thing)
+        public void Save(Record record)
         {
-            throw new NotImplementedException();
+            dbContext.Records.InsertOne(record);
         }
     }
 }

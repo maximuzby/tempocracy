@@ -8,8 +8,7 @@ namespace Tempocracy.API.DependencyInjection
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterModule<DomainModule>();
-            builder.RegisterModule<InfrastructureModule>();
+
         }
     }
 }

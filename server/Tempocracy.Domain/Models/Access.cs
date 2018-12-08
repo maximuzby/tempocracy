@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using MongoDB.Bson;
 
 namespace Tempocracy.Domain.Models
 {
     /// <summary>
-    /// Represents Thing Access settings
+    /// Represents Record Access settings
     /// </summary>
     public class Access
     {

@@ -1,14 +1,20 @@
 ﻿using System.Linq;
+using MongoDB.Driver;
 using Tempocracy.Domain;
 using Tempocracy.Domain.Models;
+using Tempocracy.Infrastructure.Database;
 
 namespace Tempocracy.Infrastructure
 {
     public class AppQueryContext : IAppQueryContext
     {
-        public IQueryable<Thing> Things => new[]
+        private readonly IMongoDbContext dbContext;
+
+        public AppQueryContext(IMongoDbContext dbContext)
         {
-            new Thing {Text = "Test"}
-        }.AsQueryable();
+            this.dbContext = dbContext;
+        }
+
+        public IQueryable<Record> Records => dbContext.Records.AsQueryable();
     }
 }
