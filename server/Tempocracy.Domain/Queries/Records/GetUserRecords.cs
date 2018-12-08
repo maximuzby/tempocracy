@@ -42,7 +42,7 @@ namespace Tempocracy.Domain.Queries.Records
         {
             var records = context.Records
                 .Take(query.Take)
-                .Where(x => x.OwnerId == query.UserToken)
+                .Where(x => x.OwnerId == query.UserToken && !x.IsDeleted)
                 .Select(x => new UserRecordView
                 {
                     Id = x.Id,

@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using MongoDB.Bson;
+using Tempocracy.Domain.Exceptions;
 
 namespace Tempocracy.Domain.Queries.Records
 {
@@ -15,7 +15,9 @@ namespace Tempocracy.Domain.Queries.Records
         public string Text { get; set; }
     }
 
-    public class GetRecordHandler : IQueryHandler<GetRecordQuery, GetRecordResult>
+    public interface IGetRecordHandler : IQueryHandler<GetRecordQuery, GetRecordResult> {}
+
+    public class GetRecordHandler : IGetRecordHandler
     {
         private readonly IAppQueryContext context;
 
@@ -29,10 +31,7 @@ namespace Tempocracy.Domain.Queries.Records
             var record = context.Records.FirstOrDefault(x => x.Id == args.Id);
             if (record == null)
             {
-                return new GetRecordResult
-                {
-                    Text = "[NOT FOUND]"
-                };
+                throw new RecordNotFoundException();
             }
 
             return new GetRecordResult

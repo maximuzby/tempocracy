@@ -15,6 +15,8 @@ namespace Tempocracy.Domain.Models
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
 
+        public bool IsNew => string.IsNullOrEmpty(Id);
+
         public string Title { get; set; }
 
         public string Text { get; set; }

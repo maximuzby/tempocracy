@@ -1,5 +1,4 @@
-﻿using MongoDB.Bson;
-using System.Linq;
+﻿using System.Linq;
 using Tempocracy.Domain.Models;
 
 namespace Tempocracy.Domain.Queries.Records

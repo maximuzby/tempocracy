@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Tempocracy.Domain.Models
+﻿namespace Tempocracy.Domain.Models
 {
     public class Comment
     {

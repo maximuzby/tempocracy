@@ -24,7 +24,7 @@ namespace Tempocracy.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
+            services.AddRouting(options => options.LowercaseUrls = true);
             services.Configure<ConnectionOptions>(Configuration);
 
             // Register the Swagger generator, defining 1 or more Swagger documents

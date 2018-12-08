@@ -1,4 +1,5 @@
-﻿using Tempocracy.Domain;
+﻿using MongoDB.Driver;
+using Tempocracy.Domain;
 using Tempocracy.Domain.Models;
 using Tempocracy.Infrastructure.Database;
 
@@ -13,9 +14,21 @@ namespace Tempocracy.Infrastructure
             this.dbContext = dbContext;
         }
 
+        public Record Get(string recordId)
+        {
+            return dbContext.Records.Find(x => x.Id == recordId).FirstOrDefault();
+        }
+
         public void Save(Record record)
         {
-            dbContext.Records.InsertOne(record);
+            if (record.IsNew)
+            {
+                dbContext.Records.InsertOne(record);
+            }
+            else
+            {
+                dbContext.Records.ReplaceOne(x => x.Id == record.Id, record);
+            }
         }
     }
 }

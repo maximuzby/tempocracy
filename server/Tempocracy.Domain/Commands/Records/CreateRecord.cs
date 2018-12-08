@@ -1,5 +1,4 @@
-﻿using MongoDB.Bson;
-using Tempocracy.Domain.Models;
+﻿using Tempocracy.Domain.Models;
 using Tempocracy.Domain.Services.Date;
 
 namespace Tempocracy.Domain.Commands.Records
@@ -25,12 +24,12 @@ namespace Tempocracy.Domain.Commands.Records
             this.context = context;
         }
 
-        public void Run(CreateRecordCommand args)
+        public void Run(CreateRecordCommand command)
         {
             var record = new Record
             {
-                OwnerId = args.UserId,
-                Text = args.Text,
+                OwnerId = command.UserId,
+                Text = command.Text,
                 CreatedAtUtc = dateTimeProvider.GetDateTimeUtc()
             };
             context.Save(record);
