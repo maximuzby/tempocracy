@@ -9,6 +9,8 @@ namespace Tempocracy.Domain.Queries.Records
         private const int DefaultTake = 100;
 
         public int Take { get; set; } = DefaultTake;
+
+        public string UserToken { get; set; }
     }
 
     public class UserRecordView
@@ -36,11 +38,14 @@ namespace Tempocracy.Domain.Queries.Records
 
         public GetUserRecordsResult Ask(GetUserRecordsQuery query)
         {
-            var records = context.Records.Take(query.Take).Select(x => new UserRecordView
-            {
-                Id = x.Id,
-                Text = x.Text
-            }).ToList();
+            var records = context.Records
+                .Take(query.Take)
+                .Where(x => x.OwnerId == query.UserToken)
+                .Select(x => new UserRecordView
+                {
+                    Id = x.Id,
+                    Text = x.Text
+                }).ToList();
 
             return new GetUserRecordsResult
             {
