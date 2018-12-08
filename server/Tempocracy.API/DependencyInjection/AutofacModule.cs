@@ -1,4 +1,6 @@
 ﻿using Autofac;
+using Tempocracy.Domain;
+using Tempocracy.Infrastructure;
 
 namespace Tempocracy.API.DependencyInjection
 {
@@ -6,6 +8,8 @@ namespace Tempocracy.API.DependencyInjection
     {
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterModule<DomainModule>();
+            builder.RegisterModule<InfrastructureModule>();
         }
     }
 }

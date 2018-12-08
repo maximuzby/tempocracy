@@ -2,7 +2,7 @@
 
 namespace Tempocracy.Domain.Queries.Things
 {
-    public class GetThingQuery
+    public class GetThingQuery : IQuery<GetThingResult>
     {
         public string Id { get; set; }
     }
@@ -14,14 +14,16 @@ namespace Tempocracy.Domain.Queries.Things
         public string Text { get; set; }
     }
 
-    public interface IGetThingHandler : IQueryHandler<GetThingQuery, GetThingResult>
+    public class GetThingHandler : IQueryHandler<GetThingQuery, GetThingResult>
     {
+        private readonly IAppQueryContext context;
 
-    }
+        public GetThingHandler(IAppQueryContext context)
+        {
+            this.context = context;
+        }
 
-    public class GetThingHandler : IGetThingHandler
-    {
-        public GetThingResult Ask(GetThingQuery args, IAppQueryContext context)
+        public GetThingResult Ask(GetThingQuery args)
         {
             var thing = context.Things.FirstOrDefault(x => x.Id == args.Id);
             if (thing == null)

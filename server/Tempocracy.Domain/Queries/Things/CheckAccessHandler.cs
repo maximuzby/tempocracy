@@ -3,7 +3,7 @@ using Tempocracy.Domain.Models;
 
 namespace Tempocracy.Domain.Queries.Things
 {
-    public class CheckAccessQuery
+    public class CheckAccessQuery : IQuery<CheckAccessResult>
     {
         public string ThingId { get; set; }
         public string AccessToken { get; set; }
@@ -16,11 +16,16 @@ namespace Tempocracy.Domain.Queries.Things
         public bool IsOwner { get; set; }
     }
 
-    public interface ICheckAccessHandler : IQueryHandler<CheckAccessQuery, CheckAccessResult> {}
-
-    public class CheckAccessHandler : ICheckAccessHandler
+    public class CheckAccessHandler : IQueryHandler<CheckAccessQuery, CheckAccessResult>
     {
-        public CheckAccessResult Ask(CheckAccessQuery query, IAppQueryContext context)
+        private readonly IAppQueryContext context;
+
+        public CheckAccessHandler(IAppQueryContext context)
+        {
+            this.context = context;
+        }
+
+        public CheckAccessResult Ask(CheckAccessQuery query)
         {
             var thing = context.Things.FirstOrDefault(x => x.Id == query.ThingId);
 

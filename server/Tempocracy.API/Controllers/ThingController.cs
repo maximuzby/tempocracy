@@ -8,7 +8,7 @@ namespace Tempocracy.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class ThingController : ControllerBase
     {
         // GET api/values
         [HttpGet]

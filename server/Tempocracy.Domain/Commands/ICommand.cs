@@ -1,7 +1,6 @@
 ﻿namespace Tempocracy.Domain.Commands
 {
-    public interface ICommand<in TCommandArgs>
+    public interface ICommand
     {
-        void Run(TCommandArgs args, IAppCommandContext context);
     }
 }
