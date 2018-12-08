@@ -26,6 +26,7 @@ const styles = (theme: Theme) =>
 		},
 		buttons: {
 			margin: theme.spacing.unit,
+			position: 'absolute',
 		},
 	});
 
@@ -139,16 +140,14 @@ class IndexView extends React.Component<WithStyles<typeof styles>, State> {
 					margin='normal'
 				/>
 				{this.state.newRecord.length > 0 && (
-					<div>
-						<Button
-							variant='contained'
-							color='primary'
-							onClick={this.addRecord}
-							className={classes.buttons}
-						>
-							Create
-						</Button>
-					</div>
+					<Button
+						variant='contained'
+						color='primary'
+						onClick={this.addRecord}
+						className={classes.buttons}
+					>
+						Save
+					</Button>
 				)}
 				{this.state.records.map(
 					(record: RecordState, index: number) => (
