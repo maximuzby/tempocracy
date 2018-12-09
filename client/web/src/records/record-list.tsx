@@ -7,7 +7,8 @@ import Typography from '@material-ui/core/Typography';
 import axios from 'axios';
 import _ from 'lodash';
 import * as React from 'react';
-import { withRoot } from '../withRoot';
+import { match } from 'react-router';
+import { withRoot } from '../with-root';
 import { GetRecordsResult, Record, UpdateRecordCommand } from './server-models';
 
 const PADDING_MULTIPLIER = 20;
@@ -47,6 +48,11 @@ interface RecordViewProps {
 	index: number;
 	classes: string;
 	onUpdate: (record: Partial<RecordState>) => void;
+}
+
+interface Props {
+	userToken: string;
+	match: match<{ userToken: string }>;
 }
 
 const WAIT_BEFORE_UPDATE_MS = 500;
@@ -95,24 +101,15 @@ const RecordView = (props: RecordViewProps) => {
 	);
 };
 
-class IndexView extends React.Component<WithStyles<typeof styles>, State> {
+class RecordListView extends React.Component<
+	WithStyles<typeof styles> & Props,
+	State
+> {
 	public state: State = {
 		open: false,
-		userToken: 'Max',
+		userToken: this.props.match.params.userToken,
 		records: [],
 		newRecord: '',
-	};
-
-	public handleClose = () => {
-		this.setState({
-			open: false,
-		});
-	};
-
-	public handleClick = () => {
-		this.setState({
-			open: true,
-		});
 	};
 
 	public componentDidMount = async () => {
@@ -127,7 +124,7 @@ class IndexView extends React.Component<WithStyles<typeof styles>, State> {
 					Records
 				</Typography>
 				<Typography variant='subtitle1' gutterBottom={true}>
-					UserToken: {this.state.userToken}
+					Path: {this.state.userToken}
 				</Typography>
 				<TextField
 					id='new-record'
@@ -208,4 +205,4 @@ class IndexView extends React.Component<WithStyles<typeof styles>, State> {
 	};
 }
 
-export const Index = withRoot(withStyles(styles)(IndexView));
+export const RecordList = withRoot(withStyles(styles)(RecordListView));
