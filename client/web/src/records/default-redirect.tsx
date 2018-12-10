@@ -8,7 +8,7 @@ const getMagicString = () =>
 		// tslint:disable-next-line:no-magic-numbers
 		.substring(2, 15);
 
-export const RedirectToRecords = () => {
+export const DefaultRedirect = () => {
 	const pathFromLocalStorage = localStorage.getItem('userToken');
 	const redirectTo = pathFromLocalStorage || getMagicString();
 	localStorage.setItem('userToken', redirectTo);

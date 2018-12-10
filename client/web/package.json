@@ -13,6 +13,9 @@
 		"@types/react-router-dom": "^4.3.1",
 		"axios": "^0.18.0",
 		"lodash": "^4.17.11",
+		"mobx": "^5.7.0",
+		"mobx-react": "^5.4.2",
+		"mobx-state-tree": "^3.9.0",
 		"prettier": "^1.15.3",
 		"react": "^16.6.3",
 		"react-dom": "^16.6.3",
@@ -36,7 +39,7 @@
 	"eslintConfig": {
 		"extends": "react-app"
 	},
-	"browserslist": [
+	"browsersList": [
 		">0.2%",
 		"not dead",
 		"not ie <= 11",

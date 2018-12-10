@@ -9,7 +9,7 @@ import _ from 'lodash';
 import * as React from 'react';
 import { match } from 'react-router';
 import { withRoot } from '../with-root';
-import { GetRecordsResult, Record, UpdateRecordCommand } from './server-models';
+import { IGetRecordsResult, IServerRecord } from './server/server-interfaces';
 
 const PADDING_MULTIPLIER = 20;
 const TEXTAREA_MAX_ROWS = 20;
@@ -31,7 +31,7 @@ const styles = (theme: Theme) =>
 		},
 	});
 
-interface RecordState extends Record {
+interface RecordState extends IServerRecord {
 	isUpdating?: boolean;
 }
 
@@ -163,7 +163,7 @@ class RecordListView extends React.Component<
 	}
 
 	private updateRecordList = async () => {
-		const response = (await axios.get<GetRecordsResult>(
+		const response = (await axios.get<IGetRecordsResult>(
 			`/api/record/list?userToken=${this.state.userToken}`,
 		)).data;
 		this.setState({

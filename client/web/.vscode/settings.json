@@ -1,4 +1,8 @@
 {
 	"editor.formatOnSave": true,
-	"prettier.tslintIntegration": true
+	"prettier.tslintIntegration": true,
+	"cSpell.words": [
+		"mobx",
+		"tempocracy"
+	]
 }
