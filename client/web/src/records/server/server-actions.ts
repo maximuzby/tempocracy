@@ -1,13 +1,13 @@
 import axios from 'axios';
 import _ from 'lodash';
-import { IRecordModel } from '../interfaces';
+import { Record } from '../stores/interfaces';
 import { IGetRecordsResult } from './server-interfaces';
 
 const WAIT_BEFORE_UPDATE_MS = 500;
 export const serverActions = {
 	updateRecordDelayed: _.debounce(
 		async (
-			record: IRecordModel,
+			record: Record,
 			userToken: string,
 			setUpdatingState: (isUpdating: boolean) => void,
 		) => {

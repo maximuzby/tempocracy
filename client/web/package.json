@@ -11,16 +11,19 @@
 		"@types/react": "16.7.13",
 		"@types/react-dom": "16.0.11",
 		"@types/react-router-dom": "^4.3.1",
+		"@types/webpack-env": "^1.13.6",
 		"axios": "^0.18.0",
 		"lodash": "^4.17.11",
 		"mobx": "^5.7.0",
 		"mobx-react": "^5.4.2",
 		"mobx-state-tree": "^3.9.0",
+		"mst-middlewares": "^3.9.0",
 		"prettier": "^1.15.3",
 		"react": "^16.6.3",
 		"react-dom": "^16.6.3",
 		"react-router-dom": "^4.3.1",
 		"react-scripts": "2.1.1",
+		"remotedev": "^0.2.9",
 		"tslint": "^5.11.0",
 		"tslint-config-prettier": "^1.17.0",
 		"tslint-eslint-rules": "^5.4.0",
@@ -35,11 +38,11 @@
 		"test": "react-scripts test",
 		"lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}'"
 	},
-	"proxy": "https://localhost:44330",
+	"proxy": "https://tempocracy.per.by",
 	"eslintConfig": {
 		"extends": "react-app"
 	},
-	"browsersList": [
+	"browserslist": [
 		">0.2%",
 		"not dead",
 		"not ie <= 11",
