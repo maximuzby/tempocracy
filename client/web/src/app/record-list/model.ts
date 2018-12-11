@@ -29,8 +29,15 @@ export const recordListModel = types
 		setNewRecordText: (text: string) => {
 			self.newRecord = text;
 		},
+	}))
+	.actions((self) => ({
+		// Function is called when this store is created
+		afterCreate: () => {
+			self.updateRecordList();
+		},
 	}));
 
 export interface RecordListModel extends Instance<typeof recordListModel> {}
 
-export interface RecordList extends SnapshotOut<typeof recordListModel> {}
+export interface RecordListSnapshot
+	extends SnapshotOut<typeof recordListModel> {}

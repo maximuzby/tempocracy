@@ -4,9 +4,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { App } from './app/app';
 import {
-	RecordList,
 	RecordListModel,
 	recordListModel,
+	RecordListSnapshot,
 } from './app/record-list/model';
 import './index.css';
 
@@ -14,8 +14,8 @@ const localStorageKey = 'tempocracy-dev';
 
 const localStorageItem = localStorage.getItem(localStorageKey);
 
-const initialState: RecordList = localStorageItem
-	? (JSON.parse(localStorageItem) as RecordList)
+const initialState: RecordListSnapshot = localStorageItem
+	? (JSON.parse(localStorageItem) as RecordListSnapshot)
 	: {
 			isLoading: false,
 			records: [],
@@ -26,7 +26,7 @@ const initialState: RecordList = localStorageItem
 let model: RecordListModel;
 let snapshotListener: (() => void) | undefined;
 
-function createModel(snapshot: RecordList) {
+function createModel(snapshot: RecordListSnapshot) {
 	if (snapshotListener) {
 		snapshotListener();
 	}
@@ -41,7 +41,7 @@ function createModel(snapshot: RecordList) {
 	// connect devtools
 	connectReduxDevtools(require('remotedev'), model);
 	// connect local storage
-	snapshotListener = onSnapshot(model, (snapshotToSave: RecordList) =>
+	snapshotListener = onSnapshot(model, (snapshotToSave: RecordListSnapshot) =>
 		localStorage.setItem(localStorageKey, JSON.stringify(snapshotToSave)),
 	);
 
@@ -50,7 +50,6 @@ function createModel(snapshot: RecordList) {
 
 function renderApp(appModel: RecordListModel) {
 	ReactDOM.render(<App model={appModel} />, document.getElementById('root'));
-	appModel.updateRecordList();
 }
 
 // Initial render
@@ -58,12 +57,12 @@ renderApp(createModel(initialState));
 
 // Connect HMR
 if (module.hot) {
-	module.hot.accept(['./app/records/record-list/model'], () => {
-		// Model definition changed, recreate a new one from old state
+	module.hot.accept(['./app/record-list/model'], () => {
+		//  definition changed, recreate a new one from old state
 		renderApp(createModel(getSnapshot(model)));
 	});
 
-	module.hot.accept(['./app'], () => {
+	module.hot.accept(['./app/app'], () => {
 		// Component definition changed, re-render app
 		renderApp(model);
 	});
