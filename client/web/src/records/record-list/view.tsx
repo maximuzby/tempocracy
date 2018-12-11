@@ -7,9 +7,10 @@ import { observer } from 'mobx-react';
 import * as React from 'react';
 import { match } from 'react-router';
 import { withRoot } from '../../with-root';
-import { RecordListStore, RecordStore } from '../stores/interfaces';
-import { RecordView } from './record-view';
-import { styles } from './styles';
+import { RecordStore } from '../record/model';
+import { RecordView } from '../record/view';
+import { styles } from '../styles';
+import { RecordListStore } from './model';
 
 const TEXTAREA_MAX_ROWS = 20;
 

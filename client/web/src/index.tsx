@@ -4,8 +4,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { App } from './app';
 import './index.css';
-import { RecordList, RecordListStore } from './records/stores/interfaces';
-import { recordListStore } from './records/stores/record-list-store';
+import {
+	RecordList,
+	RecordListStore,
+	recordListStore,
+} from './records/record-list/model';
 
 const localStorageKey = 'tempocracy-dev';
 
@@ -17,7 +20,7 @@ const initialState: RecordList = localStorageItem
 			isLoading: false,
 			records: [],
 			newRecord: '',
-			userToken: '',
+			userToken: 'Max',
 	  };
 
 let store: RecordListStore;
@@ -55,13 +58,13 @@ renderApp(createStore(initialState));
 
 // Connect HMR
 if (module.hot) {
-	module.hot.accept(['./records/stores/record-list-store'], () => {
+	module.hot.accept(['./records/record-list/model'], () => {
 		// Store definition changed, recreate a new one from old state
 		renderApp(createStore(getSnapshot(store)));
 	});
 
 	module.hot.accept(['./app'], () => {
-		// Componenent definition changed, re-render app
+		// Component definition changed, re-render app
 		renderApp(store);
 	});
 }

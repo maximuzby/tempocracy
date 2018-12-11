@@ -1,7 +1,7 @@
 import _ from 'lodash';
-import { getParentOfType, types } from 'mobx-state-tree';
-import { serverActions } from '../server/server-actions';
-import { recordListStore } from './record-list-store';
+import { getParentOfType, Instance, SnapshotOut, types } from 'mobx-state-tree';
+import { recordListStore } from '../record-list/model';
+import { serverActions } from '../server/actions';
 
 export const recordStore = types
 	.model('Record', {
@@ -29,3 +29,7 @@ export const recordStore = types
 			);
 		},
 	}));
+
+export interface RecordStore extends Instance<typeof recordStore> {}
+
+export interface Record extends SnapshotOut<typeof recordStore> {}

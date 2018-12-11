@@ -1,7 +1,7 @@
 import { TextField } from '@material-ui/core';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { RecordStore } from '../stores/interfaces';
+import { RecordStore } from './model';
 
 const TEXTAREA_MAX_ROWS = 20;
 

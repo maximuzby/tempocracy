@@ -2,7 +2,13 @@
 	"editor.formatOnSave": true,
 	"prettier.tslintIntegration": true,
 	"cSpell.words": [
+		"devtools",
+		"middlewares",
 		"mobx",
-		"tempocracy"
-	]
+		"remotedev",
+		"tempocracy",
+		"unmount"
+	],
+	"workbench.editor.labelFormat": "short",
+	"breadcrumbs.enabled": true
 }
