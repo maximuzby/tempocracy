@@ -23,48 +23,48 @@ const initialState: RecordList = localStorageItem
 			userToken: 'Max',
 	  };
 
-let store: RecordListModel;
+let model: RecordListModel;
 let snapshotListener: (() => void) | undefined;
 
-function createStore(snapshot: RecordList) {
+function createModel(snapshot: RecordList) {
 	if (snapshotListener) {
 		snapshotListener();
 	}
-	// kill old store to prevent accidental use and run clean up hooks
-	if (store) {
-		destroy(store);
+	// kill old model to prevent accidental use and run clean up hooks
+	if (model) {
+		destroy(model);
 	}
 
 	// create new one
-	store = recordListModel.create(snapshot);
+	model = recordListModel.create(snapshot);
 
 	// connect devtools
-	connectReduxDevtools(require('remotedev'), store);
+	connectReduxDevtools(require('remotedev'), model);
 	// connect local storage
-	snapshotListener = onSnapshot(store, (snapshotToSave: RecordList) =>
+	snapshotListener = onSnapshot(model, (snapshotToSave: RecordList) =>
 		localStorage.setItem(localStorageKey, JSON.stringify(snapshotToSave)),
 	);
 
-	return store;
+	return model;
 }
 
-function renderApp(appStore: RecordListModel) {
-	ReactDOM.render(<App store={appStore} />, document.getElementById('root'));
-	appStore.updateRecordList();
+function renderApp(appModel: RecordListModel) {
+	ReactDOM.render(<App model={appModel} />, document.getElementById('root'));
+	appModel.updateRecordList();
 }
 
 // Initial render
-renderApp(createStore(initialState));
+renderApp(createModel(initialState));
 
 // Connect HMR
 if (module.hot) {
 	module.hot.accept(['./app/records/record-list/model'], () => {
-		// Store definition changed, recreate a new one from old state
-		renderApp(createStore(getSnapshot(store)));
+		// Model definition changed, recreate a new one from old state
+		renderApp(createModel(getSnapshot(model)));
 	});
 
 	module.hot.accept(['./app'], () => {
 		// Component definition changed, re-render app
-		renderApp(store);
+		renderApp(model);
 	});
 }

@@ -5,12 +5,17 @@ import { DefaultRedirect } from './record-list/default-redirect';
 import { RecordListModel } from './record-list/model';
 import { RecordList } from './record-list/view';
 
-export const App = (props: { store: RecordListModel }) => (
+interface Props {
+	model: RecordListModel;
+}
+
+export const App = (props: Props) => (
 	<div>
-		<RecordList store={props.store} />
+		<RecordList model={props.model} />
 	</div>
 );
 
+// For now it is not used
 export const AppWithRoutes = () => (
 	<Router>
 		<div>

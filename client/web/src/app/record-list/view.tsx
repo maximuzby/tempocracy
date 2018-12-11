@@ -16,18 +16,18 @@ const TEXTAREA_MAX_ROWS = 20;
 
 interface Props extends WithStyles<typeof styles> {
 	match?: match<{ userToken: string }>;
-	store: RecordListModel;
+	model: RecordListModel;
 }
 
 const RecordListView = (props: Props) => {
 	const classes = props.classes;
-	const store = props.store;
+	const model = props.model;
 	const addRecord = () => {
-		store.addRecord();
+		model.addRecord();
 	};
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		store.setNewRecordText(event.target.value);
+		model.setNewRecordText(event.target.value);
 	};
 	return (
 		<div className={classes.root}>
@@ -35,19 +35,19 @@ const RecordListView = (props: Props) => {
 				Records
 			</Typography>
 			<Typography variant='subtitle1' gutterBottom={true}>
-				Path: {store.userToken}
+				Path: {model.userToken}
 			</Typography>
 			<TextField
 				id='new-record'
 				label='Create a record'
 				multiline={true}
 				rowsMax={TEXTAREA_MAX_ROWS}
-				value={store.newRecord}
+				value={model.newRecord}
 				onChange={handleChange}
 				className={classes.textField}
 				margin='normal'
 			/>
-			{store.newRecord.length > 0 && (
+			{model.newRecord.length > 0 && (
 				<Button
 					variant='contained'
 					color='primary'
@@ -57,12 +57,12 @@ const RecordListView = (props: Props) => {
 					Save
 				</Button>
 			)}
-			{store.records.map((record: RecordModel, index: number) => (
+			{model.records.map((record: RecordModel, index: number) => (
 				<RecordView
 					key={record.id}
 					index={index}
 					classes={classes.textField}
-					store={record}
+					model={record}
 				/>
 			))}
 		</div>

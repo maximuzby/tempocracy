@@ -8,26 +8,26 @@ const TEXTAREA_MAX_ROWS = 20;
 interface Props {
 	index: number;
 	classes: string;
-	store: RecordModel;
+	model: RecordModel;
 }
 
 export const RecordView = observer((props: Props) => {
-	const store = props.store;
+	const model = props.model;
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		store.updateText(event.target.value);
+		model.updateText(event.target.value);
 	};
 
-	const date = store.date();
+	const date = model.date();
 
 	return (
 		<div>
 			<TextField
-				id={`record-${store.id}`}
-				label={store.isUpdating ? 'Updating...' : date}
+				id={`record-${model.id}`}
+				label={model.isUpdating ? 'Updating...' : date}
 				multiline={true}
 				rowsMax={TEXTAREA_MAX_ROWS}
-				value={store.text}
+				value={model.text}
 				onChange={handleChange}
 				className={props.classes}
 				margin='normal'
