@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { getParentOfType, Instance, types } from 'mobx-state-tree';
+import { getParentOfType, Instance, SnapshotOut, types } from 'mobx-state-tree';
 import { recordListModel } from '../model';
 import { serverActions } from '../server/actions';
 
@@ -11,7 +11,7 @@ export const recordModel = types
 		isUpdating: false,
 	})
 	.views((self) => ({
-		list: () => getParentOfType(self, recordListModel),
+		recordList: () => getParentOfType(self, recordListModel),
 		date: () => new Date(self.createdAt).toLocaleString(),
 	}))
 	.actions((self) => ({
@@ -24,10 +24,14 @@ export const recordModel = types
 			self.text = text;
 			serverActions.updateRecordDelayed(
 				self,
-				self.list().userToken,
+				self.recordList().userToken,
 				self.setUpdatingState,
 			);
+		},
+		deleteRecord: () => {
+			self.recordList().deleteRecord(self.id);
 		},
 	}));
 
 export interface RecordModel extends Instance<typeof recordModel> {}
+export interface Record extends SnapshotOut<typeof recordModel> {}

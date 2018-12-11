@@ -19,6 +19,11 @@ namespace Tempocracy.Infrastructure
             return dbContext.Records.Find(x => x.Id == recordId).FirstOrDefault();
         }
 
+        public void Delete(string recordId)
+        {
+            dbContext.Records.DeleteOne(x => x.Id == recordId);
+        }
+
         public void Save(Record record)
         {
             if (record.IsNew)

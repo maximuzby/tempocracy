@@ -18,4 +18,10 @@ export const styles = (theme: Theme) =>
 			margin: theme.spacing.unit,
 			position: 'absolute',
 		},
+		icon: {
+			margin: theme.spacing.unit,
+			fontSize: 32,
+			cursor: 'pointer',
+			position: 'absolute',
+		},
 	});

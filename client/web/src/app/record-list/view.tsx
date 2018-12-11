@@ -61,7 +61,7 @@ const RecordListView = (props: Props) => {
 				<RecordView
 					key={record.id}
 					index={index}
-					classes={classes.textField}
+					classes={classes}
 					model={record}
 				/>
 			))}

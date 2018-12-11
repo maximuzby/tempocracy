@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Net;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Swagger;
 using Tempocracy.Domain.Commands.Records;
+using Tempocracy.Domain.Exceptions;
 using Tempocracy.Domain.Queries.Records;
 
 namespace Tempocracy.API.Controllers
@@ -13,49 +16,86 @@ namespace Tempocracy.API.Controllers
         private readonly IUpdateRecordHandler updateRecordHandler;
         private readonly IGetUserRecordsHandler getUserRecordsHandler;
         private readonly IGetRecordHandler getRecordHandler;
+        private readonly IDeleteRecordHandler deleteRecordHandler;
         
 
         public RecordController(
             IGetUserRecordsHandler getUserRecordsHandler,
             ICreateRecordHandler createRecordHandler, 
             IUpdateRecordHandler updateRecordHandler, 
-            IGetRecordHandler getRecordHandler)
+            IGetRecordHandler getRecordHandler, 
+            IDeleteRecordHandler deleteRecordHandler)
         {
             this.getUserRecordsHandler = getUserRecordsHandler;
             this.createRecordHandler = createRecordHandler;
             this.updateRecordHandler = updateRecordHandler;
             this.getRecordHandler = getRecordHandler;
+            this.deleteRecordHandler = deleteRecordHandler;
         }
 
         [HttpGet]
         [Route("list")]
         public ActionResult<GetUserRecordsResult> Get([FromQuery]GetUserRecordsQuery query)
         {
-            return getUserRecordsHandler.Ask(query);
+            return HandleQuery(() => getUserRecordsHandler.Ask(query));
         }
         
         [HttpGet]
         public ActionResult<GetRecordResult> Get([FromQuery]GetRecordQuery query)
         {
-            return getRecordHandler.Ask(query);
+            return HandleQuery(() => getRecordHandler.Ask(query));
         }
         
         [HttpPost]
-        public void Post([FromBody]CreateRecordCommand command)
+        public IActionResult Post([FromBody]CreateRecordCommand command)
         {
-            createRecordHandler.Run(command);
+            return HandleResult(() => createRecordHandler.Run(command));
         }
         
         [HttpPut]
-        public void Put([FromBody]UpdateRecordCommand command)
+        public IActionResult Put([FromBody]UpdateRecordCommand command)
         {
-            updateRecordHandler.Run(command);
+            return HandleResult(() => updateRecordHandler.Run(command));
         }
 
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete]
+        public IActionResult Delete([FromBody]DeleteRecordCommand command)
         {
-            throw new NotImplementedException();
+            return HandleResult(() => deleteRecordHandler.Run(command));
+        }
+
+        private ActionResult<T> HandleQuery<T>(Func<T> query)
+        {
+            try
+            {
+                var result = query();
+                return Ok(result);
+            }
+            catch (RecordNotFoundException)
+            {
+                return NotFound();
+            }
+            catch (RecordAccessException)
+            {
+                return StatusCode((int)HttpStatusCode.Forbidden);
+            }
+        }
+
+        private IActionResult HandleResult(Action command)
+        {
+            try
+            {
+                command();
+                return Ok();
+            }
+            catch (RecordNotFoundException)
+            {
+                return NotFound();
+            }
+            catch (RecordAccessException)
+            {
+                return StatusCode((int)HttpStatusCode.Forbidden);
+            }
         }
     }
 }

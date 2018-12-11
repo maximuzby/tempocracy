@@ -7,5 +7,7 @@ namespace Tempocracy.Domain
         Record Get(string recordId);
 
         void Save(Record record);
+
+        void Delete(string recordId);
     }
 }
