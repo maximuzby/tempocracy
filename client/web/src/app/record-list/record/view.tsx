@@ -1,17 +1,17 @@
 import { TextField } from '@material-ui/core';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { RecordStore } from './model';
+import { RecordModel } from './model';
 
 const TEXTAREA_MAX_ROWS = 20;
 
-interface RecordViewProps {
+interface Props {
 	index: number;
 	classes: string;
-	store: RecordStore;
+	store: RecordModel;
 }
 
-export const RecordView = observer((props: RecordViewProps) => {
+export const RecordView = observer((props: Props) => {
 	const store = props.store;
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

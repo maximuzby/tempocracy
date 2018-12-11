@@ -1,11 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './app.css';
-import { DefaultRedirect } from './records/default-redirect';
-import { RecordListStore } from './records/record-list/model';
-import { RecordList } from './records/record-list/view';
+import { DefaultRedirect } from './record-list/default-redirect';
+import { RecordListModel } from './record-list/model';
+import { RecordList } from './record-list/view';
 
-export const App = (props: { store: RecordListStore }) => (
+export const App = (props: { store: RecordListModel }) => (
 	<div>
 		<RecordList store={props.store} />
 	</div>

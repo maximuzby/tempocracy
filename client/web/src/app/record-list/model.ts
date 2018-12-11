@@ -1,12 +1,12 @@
 import _ from 'lodash';
 import { flow, Instance, SnapshotOut, types } from 'mobx-state-tree';
-import { recordStore } from '../record/model';
-import { serverActions } from '../server/actions';
+import { recordModel } from './record/model';
+import { serverActions } from './server/actions';
 
-export const recordListStore = types
+export const recordListModel = types
 	.model('RecordList', {
 		isLoading: true,
-		records: types.array(recordStore),
+		records: types.array(recordModel),
 		newRecord: types.string,
 		userToken: types.string,
 	})
@@ -31,6 +31,6 @@ export const recordListStore = types
 		},
 	}));
 
-export interface RecordListStore extends Instance<typeof recordListStore> {}
+export interface RecordListModel extends Instance<typeof recordListModel> {}
 
-export interface RecordList extends SnapshotOut<typeof recordListStore> {}
+export interface RecordList extends SnapshotOut<typeof recordListModel> {}

@@ -7,19 +7,19 @@ import { observer } from 'mobx-react';
 import * as React from 'react';
 import { match } from 'react-router';
 import { withRoot } from '../../with-root';
-import { RecordStore } from '../record/model';
-import { RecordView } from '../record/view';
-import { styles } from '../styles';
-import { RecordListStore } from './model';
+import { RecordListModel } from './model';
+import { RecordModel } from './record/model';
+import { RecordView } from './record/view';
+import { styles } from './styles';
 
 const TEXTAREA_MAX_ROWS = 20;
 
 interface Props extends WithStyles<typeof styles> {
 	match?: match<{ userToken: string }>;
-	store: RecordListStore;
+	store: RecordListModel;
 }
 
-const RecordListObservable = observer((props: Props) => {
+const RecordListView = (props: Props) => {
 	const classes = props.classes;
 	const store = props.store;
 	const addRecord = () => {
@@ -57,7 +57,7 @@ const RecordListObservable = observer((props: Props) => {
 					Save
 				</Button>
 			)}
-			{store.records.map((record: RecordStore, index: number) => (
+			{store.records.map((record: RecordModel, index: number) => (
 				<RecordView
 					key={record.id}
 					index={index}
@@ -67,6 +67,8 @@ const RecordListObservable = observer((props: Props) => {
 			))}
 		</div>
 	);
-});
+};
 
-export const RecordList = withRoot(withStyles(styles)(RecordListObservable));
+export const RecordList = withRoot(
+	withStyles(styles)(observer(RecordListView)),
+);

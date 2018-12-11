@@ -2,10 +2,12 @@
 	"editor.formatOnSave": true,
 	"prettier.tslintIntegration": true,
 	"cSpell.words": [
+		"antialiased",
 		"devtools",
 		"middlewares",
 		"mobx",
 		"remotedev",
+		"segoe",
 		"tempocracy",
 		"unmount"
 	],

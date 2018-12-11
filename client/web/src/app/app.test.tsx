@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { App } from './app';
-import { recordListStore } from './records/record-list/model';
+import { recordListStore } from './record-list/model';
 
 it('renders without crashing', () => {
 	const div = document.createElement('div');

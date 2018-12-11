@@ -1,9 +1,9 @@
 import _ from 'lodash';
-import { getParentOfType, Instance, SnapshotOut, types } from 'mobx-state-tree';
-import { recordListStore } from '../record-list/model';
+import { getParentOfType, Instance, types } from 'mobx-state-tree';
+import { recordListModel } from '../model';
 import { serverActions } from '../server/actions';
 
-export const recordStore = types
+export const recordModel = types
 	.model('Record', {
 		id: types.identifier,
 		text: types.string,
@@ -11,7 +11,7 @@ export const recordStore = types
 		isUpdating: false,
 	})
 	.views((self) => ({
-		list: () => getParentOfType(self, recordListStore),
+		list: () => getParentOfType(self, recordListModel),
 		date: () => new Date(self.createdAt).toLocaleString(),
 	}))
 	.actions((self) => ({
@@ -30,6 +30,4 @@ export const recordStore = types
 		},
 	}));
 
-export interface RecordStore extends Instance<typeof recordStore> {}
-
-export interface Record extends SnapshotOut<typeof recordStore> {}
+export interface RecordModel extends Instance<typeof recordModel> {}

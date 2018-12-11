@@ -2,13 +2,13 @@ import { destroy, getSnapshot, onSnapshot } from 'mobx-state-tree';
 import { connectReduxDevtools } from 'mst-middlewares';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { App } from './app';
-import './index.css';
+import { App } from './app/app';
 import {
 	RecordList,
-	RecordListStore,
-	recordListStore,
-} from './records/record-list/model';
+	RecordListModel,
+	recordListModel,
+} from './app/record-list/model';
+import './index.css';
 
 const localStorageKey = 'tempocracy-dev';
 
@@ -23,7 +23,7 @@ const initialState: RecordList = localStorageItem
 			userToken: 'Max',
 	  };
 
-let store: RecordListStore;
+let store: RecordListModel;
 let snapshotListener: (() => void) | undefined;
 
 function createStore(snapshot: RecordList) {
@@ -36,7 +36,7 @@ function createStore(snapshot: RecordList) {
 	}
 
 	// create new one
-	store = recordListStore.create(snapshot);
+	store = recordListModel.create(snapshot);
 
 	// connect devtools
 	connectReduxDevtools(require('remotedev'), store);
@@ -48,7 +48,7 @@ function createStore(snapshot: RecordList) {
 	return store;
 }
 
-function renderApp(appStore: RecordListStore) {
+function renderApp(appStore: RecordListModel) {
 	ReactDOM.render(<App store={appStore} />, document.getElementById('root'));
 	appStore.updateRecordList();
 }
@@ -58,7 +58,7 @@ renderApp(createStore(initialState));
 
 // Connect HMR
 if (module.hot) {
-	module.hot.accept(['./records/record-list/model'], () => {
+	module.hot.accept(['./app/records/record-list/model'], () => {
 		// Store definition changed, recreate a new one from old state
 		renderApp(createStore(getSnapshot(store)));
 	});
