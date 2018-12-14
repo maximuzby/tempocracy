@@ -1,12 +1,12 @@
 import _ from 'lodash';
 import { flow, Instance, SnapshotOut, types } from 'mobx-state-tree';
-import { Record, recordModel } from './record/model';
+import { RecordModel } from './record/model';
 import { serverActions } from './server/actions';
 
-export const recordListModel = types
+export const RecordListModel = types
 	.model('RecordList', {
 		isLoading: true,
-		records: types.array(recordModel),
+		records: types.array(RecordModel),
 		newRecord: types.string,
 		userToken: types.string,
 	})
@@ -23,8 +23,7 @@ export const recordListModel = types
 			self.newRecord = '';
 			self.isLoading = false;
 		}),
-		deleteRecord: flow(function*(recordId: string) {
-			const record = self.records.find((x) => x.id === recordId);
+		deleteRecord: flow(function*(record: RecordModel) {
 			if (record) {
 				yield serverActions.deleteRecord(record.id, self.userToken);
 				self.records.remove(record);
@@ -44,7 +43,7 @@ export const recordListModel = types
 		},
 	}));
 
-export interface RecordListModel extends Instance<typeof recordListModel> {}
+export interface RecordListModel extends Instance<typeof RecordListModel> {}
 
 export interface RecordListSnapshot
-	extends SnapshotOut<typeof recordListModel> {}
+	extends SnapshotOut<typeof RecordListModel> {}

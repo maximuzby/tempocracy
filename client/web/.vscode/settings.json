@@ -3,9 +3,12 @@
 	"prettier.tslintIntegration": true,
 	"cSpell.words": [
 		"antialiased",
+		"browserslist",
 		"devtools",
+		"keyframes",
 		"middlewares",
 		"mobx",
+		"parens",
 		"remotedev",
 		"segoe",
 		"tempocracy",

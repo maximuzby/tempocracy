@@ -1,16 +1,15 @@
 import { TextField } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
-import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
+import { WithStyles } from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
 import _ from 'lodash';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { match } from 'react-router';
-import { withRoot } from '../../with-root';
+import { styles } from '../styles';
 import { RecordListModel } from './model';
 import { RecordModel } from './record/model';
 import { RecordView } from './record/view';
-import { styles } from './styles';
 
 const TEXTAREA_MAX_ROWS = 20;
 
@@ -19,11 +18,15 @@ interface Props extends WithStyles<typeof styles> {
 	model: RecordListModel;
 }
 
-const RecordListView = (props: Props) => {
+export const RecordList = observer((props: Props) => {
 	const classes = props.classes;
 	const model = props.model;
 	const addRecord = () => {
 		model.addRecord();
+	};
+
+	const deleteRecord = (record: RecordModel) => () => {
+		model.deleteRecord(record);
 	};
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,12 +66,10 @@ const RecordListView = (props: Props) => {
 					index={index}
 					classes={classes}
 					model={record}
+					listModel={model}
+					onDelete={deleteRecord(record)}
 				/>
 			))}
 		</div>
 	);
-};
-
-export const RecordList = withRoot(
-	withStyles(styles)(observer(RecordListView)),
-);
+});

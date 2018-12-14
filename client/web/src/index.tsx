@@ -4,29 +4,25 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { App } from './app/app';
 import {
-	RecordListModel,
-	recordListModel,
-	RecordListSnapshot,
-} from './app/record-list/model';
+	AppState,
+	AppStateModel,
+	AppStateSnapshot,
+	defaultState,
+} from './app/app-state';
 import './index.css';
 
 const localStorageKey = 'tempocracy-dev';
 
 const localStorageItem = localStorage.getItem(localStorageKey);
 
-const initialState: RecordListSnapshot = localStorageItem
-	? (JSON.parse(localStorageItem) as RecordListSnapshot)
-	: {
-			isLoading: false,
-			records: [],
-			newRecord: '',
-			userToken: 'Max',
-	  };
+const initialState: AppStateSnapshot = localStorageItem
+	? (JSON.parse(localStorageItem) as AppStateSnapshot)
+	: defaultState();
 
-let model: RecordListModel;
+let model: AppStateModel;
 let snapshotListener: (() => void) | undefined;
 
-function createModel(snapshot: RecordListSnapshot) {
+function createModel(snapshot: AppStateSnapshot) {
 	if (snapshotListener) {
 		snapshotListener();
 	}
@@ -35,29 +31,32 @@ function createModel(snapshot: RecordListSnapshot) {
 		destroy(model);
 	}
 
-	// create new one
-	model = recordListModel.create(snapshot);
+	model = AppState.create(snapshot);
 
 	// connect devtools
 	connectReduxDevtools(require('remotedev'), model);
 	// connect local storage
-	snapshotListener = onSnapshot(model, (snapshotToSave: RecordListSnapshot) =>
+	snapshotListener = onSnapshot(model, (snapshotToSave: AppStateSnapshot) =>
 		localStorage.setItem(localStorageKey, JSON.stringify(snapshotToSave)),
 	);
 
 	return model;
 }
 
-function renderApp(appModel: RecordListModel) {
+function renderApp(appModel: AppStateModel) {
 	ReactDOM.render(<App model={appModel} />, document.getElementById('root'));
 }
 
-// Initial render
-renderApp(createModel(initialState));
+// Initial render. Fallback to empty state.
+try {
+	renderApp(createModel(initialState));
+} catch (err) {
+	renderApp(createModel(defaultState()));
+}
 
 // Connect HMR
 if (module.hot) {
-	module.hot.accept(['./app/record-list/model'], () => {
+	module.hot.accept(['./app/app-state'], () => {
 		//  definition changed, recreate a new one from old state
 		renderApp(createModel(getSnapshot(model)));
 	});
