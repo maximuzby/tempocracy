@@ -1,9 +1,10 @@
 ﻿using System;
+using Tempocracy.Domain.Commands.Records.Mappers;
 using Tempocracy.Domain.Exceptions;
 
 namespace Tempocracy.Domain.Commands.Records
 {
-    public class UpdateRecordCommand : ICommand
+    public class UpdateRecordCommand : IRecordSaveCommand
     {
         public string UserId { get; set; }
         public string RecordId { get; set; }
@@ -15,10 +16,12 @@ namespace Tempocracy.Domain.Commands.Records
     public class UpdateRecordHandler : IUpdateRecordHandler
     {
         private readonly IAppCommandContext context;
+        private readonly IRecordMapper mapper;
 
-        public UpdateRecordHandler(IAppCommandContext context)
+        public UpdateRecordHandler(IAppCommandContext context, IRecordMapper mapper)
         {
             this.context = context;
+            this.mapper = mapper;
         }
 
         public void Run(UpdateRecordCommand command)
@@ -34,7 +37,7 @@ namespace Tempocracy.Domain.Commands.Records
                 throw new RecordAccessException();
             }
 
-            record.Text = command.Text;
+            mapper.MapToDomain(record, command);
             context.Save(record);
         }
     }
