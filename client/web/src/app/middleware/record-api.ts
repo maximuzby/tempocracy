@@ -1,29 +1,35 @@
 import axios from 'axios';
 import _ from 'lodash';
-import { GetRecordsResult, ServerRecord } from './interfaces';
+import {
+	AddRecordArgs,
+	GetRecordsResult,
+	ServerRecord,
+	UpdateRecordArgs,
+} from './interfaces';
 
 const RECORD_ROUTE = '/api/record';
 const WAIT_BEFORE_UPDATE_MS = 500;
 
-export const serverActions = {
-	addRecord: async (text: string, userToken: string): Promise<void> => {
-		await axios.post<void>(`/api/record`, {
-			userId: userToken,
-			text,
-		});
+const mapRecordArgs = (args: AddRecordArgs) => ({
+	userId: args.userToken,
+	text: args.text,
+	finish: args.finish,
+});
+
+export const recordApi = {
+	addRecord: async (args: AddRecordArgs): Promise<void> => {
+		await axios.post<void>(`/api/record`, mapRecordArgs(args));
 	},
 	// _.debounce is used in order to send update call only when user stopped typing.
 	updateRecordDelayed: _.debounce(
 		async (
-			record: ServerRecord,
-			userToken: string,
+			args: UpdateRecordArgs,
 			setUpdatingState: (isUpdating: boolean) => void,
 		) => {
 			setUpdatingState(true);
 			await axios.put<void>(RECORD_ROUTE, {
-				userId: userToken,
-				recordId: record.id,
-				text: record.text,
+				...mapRecordArgs(args),
+				recordId: args.id,
 			});
 			setUpdatingState(false);
 		},

@@ -1,7 +1,8 @@
 import { withStyles, WithStyles } from '@material-ui/core';
 import React from 'react';
+import 'typeface-roboto';
 import { AppStateModel } from './app-state';
-import { RecordList } from './record-list/view';
+import { RecordList } from './record-list/record-list';
 import { styles } from './styles';
 import { withRoot } from './with-root';
 

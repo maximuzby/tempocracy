@@ -1,12 +1,14 @@
 import * as React from 'react';
 import { Redirect } from 'react-router-dom';
 
+const RADIX = 36;
+const SUBSTRING_START = 2;
+const SUBSTRING_END = 15;
+
 const getMagicString = () =>
 	Math.random()
-		// tslint:disable-next-line:no-magic-numbers
-		.toString(36)
-		// tslint:disable-next-line:no-magic-numbers
-		.substring(2, 15);
+		.toString(RADIX)
+		.substring(SUBSTRING_START, SUBSTRING_END);
 
 export const DefaultRedirect = () => {
 	const pathFromLocalStorage = localStorage.getItem('userToken');

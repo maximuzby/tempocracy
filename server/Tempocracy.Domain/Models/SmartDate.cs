@@ -4,10 +4,10 @@ namespace Tempocracy.Domain.Models
 {
     public class SmartDate
     {
-        public DateTime? DateTime;
+        public DateTime? DateTime { get; set; }
 
-        public DateAccuracy Accuracy;
+        public DateAccuracy Accuracy { get; set; }
 
-        public string Description;
+        public string Description { get; set; }
     }
 }

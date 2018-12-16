@@ -1,5 +1,5 @@
-import { Instance, SnapshotOut, types } from 'mobx-state-tree';
-import { RecordListModel, RecordListSnapshot } from './record-list/model';
+import { Instance, SnapshotIn, types } from 'mobx-state-tree';
+import { RecordListModel } from './record-list/record-list-model';
 import { UserModel } from './user/user-model';
 
 export const AppState = types
@@ -18,7 +18,7 @@ export const AppState = types
 
 export interface AppStateModel extends Instance<typeof AppState> {}
 
-export interface AppStateSnapshot extends SnapshotOut<typeof AppState> {}
+export interface AppStateSnapshot extends SnapshotIn<typeof AppState> {}
 
 export const defaultState = (): AppStateSnapshot => {
 	return {
@@ -29,7 +29,6 @@ export const defaultState = (): AppStateSnapshot => {
 		recordList: {
 			isLoading: true,
 			records: [],
-			newRecord: '',
 			userToken: 'Max',
 		},
 	};
