@@ -9,6 +9,9 @@ import {
 	AppStateSnapshot,
 	defaultState,
 } from './app/app-state';
+
+import 'normalize.css/normalize.css';
+
 import './index.css';
 
 const localStorageKey = 'tempocracy-dev';

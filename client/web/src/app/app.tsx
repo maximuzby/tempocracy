@@ -1,25 +1,22 @@
-import { withStyles, WithStyles } from '@material-ui/core';
+import { observer } from 'mobx-react';
 import React from 'react';
-import 'typeface-roboto';
+import { AppLayout } from './app-layout';
 import { AppStateModel } from './app-state';
+import { AppNavbar } from './navigation/app-navbar';
 import { RecordList } from './record-list/record-list';
-import { styles } from './styles';
-import { withRoot } from './with-root';
 
-interface Props extends WithStyles<typeof styles> {
+interface Props {
 	model: AppStateModel;
 }
 
-export const App = withRoot(
-	withStyles(styles)((props: Props) => (
-		<div>
-			<RecordList
-				model={props.model.recordList}
-				classes={props.classes}
-			/>
-		</div>
-	)),
-);
+export const App = observer((props: Props) => (
+	<AppLayout>
+		{{
+			header: <AppNavbar />,
+			body: <RecordList model={props.model.recordList} />,
+		}}
+	</AppLayout>
+));
 
 // For now it is not used
 // export const AppWithRoutes = () => (

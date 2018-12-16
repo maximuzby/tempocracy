@@ -1,50 +1,56 @@
-import { WithStyles } from '@material-ui/core/styles/withStyles';
-import Typography from '@material-ui/core/Typography';
-import _ from 'lodash';
+import { Spinner } from '@blueprintjs/core';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { match } from 'react-router';
-import { styles } from '../styles';
-import { RecordAdd } from './record-edit/record-add';
-import { RecordEdit } from './record-edit/record-edit';
-import { RecordEditModel } from './record-edit/record-edit-model';
 import { RecordListModel } from './record-list-model';
+import { RecordAdd } from './record/add/record-add';
+import { RecordEdit } from './record/edit/record-edit';
+import { RecordFocus } from './record/record';
+import { RecordModel } from './record/record-model';
 
-interface Props extends WithStyles<typeof styles> {
+interface Props {
 	match?: match<{ userToken: string }>;
 	model: RecordListModel;
 }
 
+const getFocusState = (model: RecordListModel, record: RecordModel) => {
+	return {
+		onFocus: () => model.setFocus(record),
+		isFocused: model.focusedRecord === record,
+	};
+};
+
+const RenderRecordEdit = (model: RecordListModel, record: RecordModel) => {
+	const onDelete = () => model.deleteRecord(record);
+	const focus = getFocusState(model, record);
+	return (
+		<RecordEdit
+			key={record.id}
+			model={record}
+			onDelete={onDelete}
+			focus={focus}
+		/>
+	);
+};
+
 export const RecordList = observer((props: Props) => {
-	const classes = props.classes;
 	const model = props.model;
 
 	const addRecord = () => model.addRecord(model.newRecord);
+	const newRecordFocus = getFocusState(model, model.newRecord);
 
-	return (
-		<div className={classes.root}>
-			<Typography variant='h4' gutterBottom={true}>
-				Records
-			</Typography>
-			<Typography variant='subtitle1' gutterBottom={true}>
-				Path: {model.userToken}
-			</Typography>
+	return model.isLoading ? (
+		<Spinner />
+	) : (
+		<div>
+			<h4>Records</h4>
+			<h5>Path: {model.userToken}</h5>
 			<RecordAdd
-				classes={props.classes}
 				model={model.newRecord}
 				addRecord={addRecord}
+				focus={newRecordFocus}
 			/>
-			{model.records.map((record: RecordEditModel) => {
-				const onDelete = () => model.deleteRecord(record);
-				return (
-					<RecordEdit
-						key={record.id}
-						classes={props.classes}
-						model={record}
-						onDelete={onDelete}
-					/>
-				);
-			})}
+			{model.records.map((x) => RenderRecordEdit(model, x))}
 		</div>
 	);
 });
