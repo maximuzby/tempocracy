@@ -3,6 +3,7 @@
 	"prettier.tslintIntegration": true,
 	"cSpell.words": [
 		"antialiased",
+		"blueprintjs",
 		"browserslist",
 		"devtools",
 		"keyframes",

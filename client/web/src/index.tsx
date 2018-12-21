@@ -1,3 +1,4 @@
+import { createBrowserHistory } from 'history';
 import { destroy, getSnapshot, onSnapshot } from 'mobx-state-tree';
 import { connectReduxDevtools } from 'mst-middlewares';
 import React from 'react';
@@ -21,6 +22,8 @@ const localStorageItem = localStorage.getItem(localStorageKey);
 const initialState: AppStateSnapshot = localStorageItem
 	? (JSON.parse(localStorageItem) as AppStateSnapshot)
 	: defaultState();
+
+const browserHistory = createBrowserHistory();
 
 let model: AppStateModel;
 let snapshotListener: (() => void) | undefined;

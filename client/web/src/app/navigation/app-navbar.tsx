@@ -8,6 +8,7 @@ import {
 	NavbarHeading,
 } from '@blueprintjs/core';
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 
 export const AppNavbar = () => {
 	return (
@@ -15,7 +16,9 @@ export const AppNavbar = () => {
 			<NavbarGroup align={Alignment.LEFT}>
 				<NavbarHeading>Tempocracy</NavbarHeading>
 				<NavbarDivider />
-				<AnchorButton href='/' text='My Records' minimal={true} />
+				<Link className='bp3-button bp3-minimal' to='/'>
+					My Records
+				</Link>
 			</NavbarGroup>
 		</Navbar>
 	);

@@ -8,8 +8,12 @@ import { RecordEdit } from './record/edit/record-edit';
 import { RecordFocus } from './record/record';
 import { RecordModel } from './record/record-model';
 
+export interface RecordListUrlProps {
+	userToken: string;
+}
+
 interface Props {
-	match?: match<{ userToken: string }>;
+	match?: match<RecordListUrlProps>;
 	model: RecordListModel;
 }
 

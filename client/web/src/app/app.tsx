@@ -1,22 +1,49 @@
 import { observer } from 'mobx-react';
 import React from 'react';
+import {
+	BrowserRouter,
+	Route,
+	RouteComponentProps,
+	Switch,
+} from 'react-router-dom';
 import { AppLayout } from './app-layout';
 import { AppStateModel } from './app-state';
 import { AppNavbar } from './navigation/app-navbar';
-import { RecordList } from './record-list/record-list';
+import { RecordList, RecordListUrlProps } from './record-list/record-list';
 
 interface Props {
 	model: AppStateModel;
 }
 
-export const App = observer((props: Props) => (
-	<AppLayout>
-		{{
-			header: <AppNavbar />,
-			body: <RecordList model={props.model.recordList} />,
-		}}
-	</AppLayout>
-));
+const NotFound = () => {
+	return <h1>Not Found!</h1>;
+};
+
+const AppBody = (props: Props) => {
+	const renderRecordList = (
+		routeProps: RouteComponentProps<RecordListUrlProps>,
+	) => {
+		return <RecordList model={props.model.recordList} {...routeProps} />;
+	};
+
+	return (
+		<Switch>
+			<Route path='/' exact={true} render={renderRecordList} />
+			<Route component={NotFound} />
+		</Switch>
+	);
+};
+
+export const App = (props: Props) => (
+	<BrowserRouter>
+		<AppLayout>
+			{{
+				header: <AppNavbar />,
+				body: <AppBody model={props.model} />,
+			}}
+		</AppLayout>
+	</BrowserRouter>
+);
 
 // For now it is not used
 // export const AppWithRoutes = () => (
