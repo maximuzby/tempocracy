@@ -3,6 +3,14 @@ import { flow, Instance, types } from 'mobx-state-tree';
 import { recordApi } from '../middleware/record-api';
 import { NEW_RECORD_ID, RecordModel } from './record/record-model';
 
+export const SomeServiceModel = types
+	.model('SomeService', { isBlue: false })
+	.actions((self) => ({
+		sayHello: () => alert('hello!'),
+	}));
+
+export interface SomeServiceModel extends Instance<typeof SomeServiceModel> {}
+
 export const RecordListModel = types
 	.model('RecordList', {
 		isLoading: true,

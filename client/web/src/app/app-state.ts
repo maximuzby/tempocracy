@@ -1,5 +1,8 @@
 import { Instance, SnapshotIn, types } from 'mobx-state-tree';
-import { RecordListModel } from './record-list/record-list-model';
+import {
+	RecordListModel,
+	SomeServiceModel,
+} from './record-list/record-list-model';
 import { UserModel } from './user/user-model';
 
 export const AppState = types
@@ -7,6 +10,7 @@ export const AppState = types
 		isLoading: true,
 		currentUser: types.optional(UserModel, { token: '' }),
 		recordList: RecordListModel,
+		someService: SomeServiceModel,
 	})
 	.actions((self) => ({
 		afterCreate: () => {
@@ -31,5 +35,6 @@ export const defaultState = (): AppStateSnapshot => {
 			records: [],
 			userToken: 'Max',
 		},
+		someService: {},
 	};
 };

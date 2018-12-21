@@ -1,15 +1,16 @@
+import { createBrowserHistory } from 'history';
 import { observer } from 'mobx-react';
+import { RouterStore, syncHistoryWithStore } from 'mobx-react-router';
 import React from 'react';
-import {
-	BrowserRouter,
-	Route,
-	RouteComponentProps,
-	Switch,
-} from 'react-router-dom';
+import { Router } from 'react-router';
 import { AppLayout } from './app-layout';
 import { AppStateModel } from './app-state';
 import { AppNavbar } from './navigation/app-navbar';
-import { RecordList, RecordListUrlProps } from './record-list/record-list';
+import { RecordList } from './record-list/record-list';
+
+const browserHistory = createBrowserHistory();
+const routingStore = new RouterStore();
+const history = syncHistoryWithStore(browserHistory, routingStore);
 
 interface Props {
 	model: AppStateModel;
@@ -19,30 +20,23 @@ const NotFound = () => {
 	return <h1>Not Found!</h1>;
 };
 
-const AppBody = (props: Props) => {
-	const renderRecordList = (
-		routeProps: RouteComponentProps<RecordListUrlProps>,
-	) => {
-		return <RecordList model={props.model.recordList} {...routeProps} />;
-	};
-
-	return (
-		<Switch>
-			<Route path='/' exact={true} render={renderRecordList} />
-			<Route component={NotFound} />
-		</Switch>
+const AppBody = observer((props: Props) => {
+	return routingStore.location.pathname === '/' ? (
+		<RecordList model={props.model.recordList} />
+	) : (
+		<NotFound />
 	);
-};
+});
 
 export const App = (props: Props) => (
-	<BrowserRouter>
+	<Router history={history}>
 		<AppLayout>
 			{{
-				header: <AppNavbar />,
+				header: <AppNavbar router={routingStore} />,
 				body: <AppBody model={props.model} />,
 			}}
 		</AppLayout>
-	</BrowserRouter>
+	</Router>
 );
 
 // For now it is not used
