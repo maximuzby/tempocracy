@@ -1,8 +1,7 @@
 import { Spinner } from '@blueprintjs/core';
-import { inject, observer } from 'mobx-react';
+import { observer } from 'mobx-react';
 import * as React from 'react';
-import { match } from 'react-router';
-import { RecordListModel, SomeServiceModel } from './record-list-model';
+import { RecordListModel } from './record-list-model';
 import { RecordAdd } from './record/add/record-add';
 import { RecordEdit } from './record/edit/record-edit';
 import { RecordFocus } from './record/record';
@@ -13,7 +12,6 @@ export interface RecordListUrlProps {
 }
 
 interface Props {
-	match?: match<RecordListUrlProps>;
 	model: RecordListModel;
 }
 

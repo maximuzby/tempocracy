@@ -7,24 +7,23 @@ import {
 	NavbarGroup,
 	NavbarHeading,
 } from '@blueprintjs/core';
-import { RouterStore } from 'mobx-react-router';
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { router } from './router';
 
-interface Props {
-	router: RouterStore;
-}
-
-export const AppNavbar = (props: Props) => {
-	const onClick = () => {
-		props.router.push('/');
+export const AppNavbar = () => {
+	const gotoHome = () => {
+		router.goTo('home');
+	};
+	const goto404 = () => {
+		router.goToNotFound();
 	};
 	return (
 		<Navbar className={Classes.DARK}>
 			<NavbarGroup align={Alignment.LEFT}>
 				<NavbarHeading>Tempocracy</NavbarHeading>
 				<NavbarDivider />
-				<Button minimal={true} text='My Records' onClick={onClick} />
+				<Button minimal={true} text='My Records' onClick={gotoHome} />
+				<Button minimal={true} text='404' onClick={goto404} />
 			</NavbarGroup>
 		</Navbar>
 	);
