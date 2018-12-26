@@ -30,7 +30,7 @@ export const RecordModel = types
 	.actions((self) => ({
 		updateText: (text: string) => {
 			self.text = text;
-			if (self.isNew()) {
+			if (!self.isNew()) {
 				recordApi.updateRecordDelayed(
 					{
 						id: self.id,

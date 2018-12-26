@@ -7,15 +7,16 @@ import {
 	NavbarGroup,
 	NavbarHeading,
 } from '@blueprintjs/core';
+import { RouterModel } from 'mst-react-router';
 import * as React from 'react';
-import { router } from './router';
 
-export const AppNavbar = () => {
+interface Props {
+	router: RouterModel;
+}
+
+export const AppNavbar = (props: Props) => {
 	const gotoHome = () => {
-		router.goTo('home');
-	};
-	const goto404 = () => {
-		router.goToNotFound();
+		props.router.push('/records');
 	};
 	return (
 		<Navbar className={Classes.DARK}>
@@ -23,7 +24,6 @@ export const AppNavbar = () => {
 				<NavbarHeading>Tempocracy</NavbarHeading>
 				<NavbarDivider />
 				<Button minimal={true} text='My Records' onClick={gotoHome} />
-				<Button minimal={true} text='404' onClick={goto404} />
 			</NavbarGroup>
 		</Navbar>
 	);

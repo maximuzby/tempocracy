@@ -48,12 +48,6 @@ export const RecordListModel = types
 		setFocus: (record: RecordModel | undefined) => {
 			self.focusedRecord = record;
 		},
-	}))
-	.actions((self) => ({
-		// Function is called when this model is created
-		afterCreate: () => {
-			self.updateRecordList();
-		},
 	}));
 
 export interface RecordListModel extends Instance<typeof RecordListModel> {}

@@ -18,12 +18,14 @@
 		"lodash": "^4.17.11",
 		"mobx": "5.8.0",
 		"mobx-react": "5.4.3",
-		"mobx-state-router": "^4.0.3",
 		"mobx-state-tree": "^3.9.0",
 		"mst-middlewares": "^3.9.0",
+		"mst-react-router": "^2.3.1",
+		"path-match": "^1.2.4",
 		"prettier": "^1.15.3",
 		"react": "^16.6.3",
 		"react-dom": "^16.6.3",
+		"react-router-dom": "^4.3.1",
 		"react-scripts": "2.1.1",
 		"remotedev": "^0.2.9",
 		"tslint": "^5.11.0",
@@ -41,7 +43,7 @@
 		"test": "react-scripts test",
 		"lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}'"
 	},
-	"proxy": "https://tempocracy.per.by",
+	"proxy": "https://localhost:44330",
 	"eslintConfig": {
 		"extends": "react-app"
 	},

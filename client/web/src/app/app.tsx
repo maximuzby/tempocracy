@@ -11,7 +11,7 @@ interface Props {
 export const App = (props: Props) => (
 	<AppLayout>
 		{{
-			header: <AppNavbar />,
+			header: <AppNavbar router={props.model.router} />,
 			body: <AppBody model={props.model} />,
 		}}
 	</AppLayout>

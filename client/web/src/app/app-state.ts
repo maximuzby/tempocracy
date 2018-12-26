@@ -1,4 +1,5 @@
 import { Instance, SnapshotIn, types } from 'mobx-state-tree';
+import { RouterModel } from 'mst-react-router';
 import {
 	RecordListModel,
 	SomeServiceModel,
@@ -11,9 +12,10 @@ export const AppState = types
 		currentUser: types.optional(UserModel, { token: '' }),
 		recordList: RecordListModel,
 		someService: SomeServiceModel,
+		router: RouterModel,
 	})
 	.actions((self) => ({
-		afterCreate: () => {
+		openRecords: () => {
 			self.currentUser = UserModel.create({
 				token: 'Max',
 			});
@@ -30,6 +32,7 @@ export const defaultState = (): AppStateSnapshot => {
 		currentUser: {
 			token: 'Max',
 		},
+		router: RouterModel.create(),
 		recordList: {
 			isLoading: true,
 			records: [],

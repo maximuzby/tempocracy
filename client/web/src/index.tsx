@@ -1,6 +1,7 @@
 import { createBrowserHistory } from 'history';
 import { destroy, getSnapshot, onSnapshot } from 'mobx-state-tree';
 import { connectReduxDevtools } from 'mst-middlewares';
+import { syncHistoryWithStore } from 'mst-react-router';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { App } from './app/app';
@@ -13,17 +14,19 @@ import {
 
 import 'normalize.css/normalize.css';
 
+import { Router } from 'react-router-dom';
 import './index.css';
+
+const SAVE_STATE_FOR_REBUILD = false;
 
 const localStorageKey = 'tempocracy-dev';
 
-const localStorageItem = localStorage.getItem(localStorageKey);
+const localStorageItem =
+	SAVE_STATE_FOR_REBUILD && localStorage.getItem(localStorageKey);
 
 const initialState: AppStateSnapshot = localStorageItem
 	? (JSON.parse(localStorageItem) as AppStateSnapshot)
 	: defaultState();
-
-const browserHistory = createBrowserHistory();
 
 let model: AppStateModel;
 let snapshotListener: (() => void) | undefined;
@@ -32,6 +35,7 @@ function createModel(snapshot: AppStateSnapshot) {
 	if (snapshotListener) {
 		snapshotListener();
 	}
+
 	// kill old model to prevent accidental use and run clean up hooks
 	if (model) {
 		destroy(model);
@@ -50,7 +54,17 @@ function createModel(snapshot: AppStateSnapshot) {
 }
 
 function renderApp(appModel: AppStateModel) {
-	ReactDOM.render(<App model={appModel} />, document.getElementById('root'));
+	const history = syncHistoryWithStore(
+		createBrowserHistory(),
+		appModel.router,
+	);
+
+	ReactDOM.render(
+		<Router history={history}>
+			<App model={appModel} />
+		</Router>,
+		document.getElementById('root'),
+	);
 }
 
 // Initial render. Fallback to empty state.
